@@ -1,31 +1,31 @@
 <router-outlet />
 
-<section class="h-screen flex flex-col justify-center items-center">
+<section class="h-dvh flex flex-col justify-center items-center">
   <div class="flex justify-evenly min-w-[360px]">
     <div class="flex items-center">
       <app-wheel [options]="hours"></app-wheel>
       <span>hour</span>
     </div>
     <div class="flex items-center">
-      <app-wheel
-        [options]="minutes"
-      ></app-wheel>
+      <app-wheel [options]="minutes"></app-wheel>
       <span>min</span>
     </div>
     <div class="flex items-center">
-      <app-wheel
-        [options]="seconds"
-      ></app-wheel>
+      <app-wheel [options]="seconds"></app-wheel>
       <span>sec</span>
     </div>
   </div>
 
-  <div class="flex justify-center gap-4 items-center mt-5 text-sm">
-    <button class="hover:bg-black hover:bg-opacity-10 py-1 px-7 rounded-full">
+  <div class="flex justify-center gap-4 items-center flex-wrap mt-5 text-sm">
+    <button class="bg-violet-800 hover:bg-opacity-70 py-3 px-14 rounded-full">
+      Start
+    </button>
+  </div>
+  <div class="flex justify-center gap-4 items-center flex-wrap mt-5 text-sm">
+    <button class="hover:bg-black hover:bg-opacity-10 py-3 px-10 rounded-full">
       Stop
     </button>
-    <button class="bg-violet-800 hover:bg-opacity-70 py-2 px-10 rounded-full">Start</button>
-    <button class="hover:bg-black hover:bg-opacity-10 py-1 px-7 rounded-full">
+    <button class="hover:bg-black hover:bg-opacity-10 py-3 px-10 rounded-full">
       Reset
     </button>
   </div>

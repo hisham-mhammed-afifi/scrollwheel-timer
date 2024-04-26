@@ -18,6 +18,7 @@
       class="no-scrollbar h-full w-full"
       #timeScroll
       (mousewheel)="onHoursScroll($event)"
+      (scroll)="onHoursScroll($event)"
     >
       @for (option of options; track $index) {
       <div class="text-center text-2xl leading-relaxed">{{ option }}</div>
