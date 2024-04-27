@@ -46,10 +46,6 @@ export class WheelComponent {
   // }
 
   onScroll(event: Event) {
-    this.audio = new Audio('assets/audios/scroll-audio.mp3');
-    this.audio.playbackRate = 3.0;
-    this.audio.play();
-
     const scrollH = this.timeScrollElement.nativeElement.scrollHeight;
     const scrollStep = scrollH / this.options.length;
     const scrollT = (event.target as HTMLElement).scrollTop;
@@ -60,6 +56,11 @@ export class WheelComponent {
           this.options.length
       );
       this.lastScrollPosition = scrollT;
+
+      // then play the sound
+      this.audio = new Audio('assets/audios/scroll-audio.mp3');
+      this.audio.playbackRate = 3.0;
+      this.audio.play();
     }
   }
 
