@@ -3,11 +3,19 @@
     class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
   >
     <div class="flex flex-col justify-around items-center px-4">
-      <span class="text-slate-400">{{ getElementAtIndex(selectedIndex - 2) }}</span>
-      <span class="text-2xl text-slate-300">{{ getElementAtIndex(selectedIndex - 1) }}</span>
+      <span class="text-slate-400">{{
+        getElementAtIndex(selectedIndex - 2)
+      }}</span>
+      <span class="text-2xl text-slate-300">{{
+        getElementAtIndex(selectedIndex - 1)
+      }}</span>
       <span class="text-5xl">{{ getElementAtIndex(selectedIndex) }}</span>
-      <span class="text-2xl text-slate-300">{{ getElementAtIndex(selectedIndex + 1) }}</span>
-      <span class="text-slate-400">{{ getElementAtIndex(selectedIndex + 2) }}</span>
+      <span class="text-2xl text-slate-300">{{
+        getElementAtIndex(selectedIndex + 1)
+      }}</span>
+      <span class="text-slate-400">{{
+        getElementAtIndex(selectedIndex + 2)
+      }}</span>
     </div>
   </div>
 
@@ -17,11 +25,13 @@
     <div
       class="no-scrollbar h-full w-full"
       #timeScroll
-      (mousewheel)="onHoursScroll($event)"
-      (scroll)="onHoursScroll($event)"
+      (mousewheel)="$event.preventDefault()"
+      (scroll)="onScroll($event)"
     >
       @for (option of options; track $index) {
-      <div class="text-center text-2xl leading-relaxed">{{ option }}</div>
+      <div class="text-center text-2xl leading-relaxed snap-center">
+        {{ option }}
+      </div>
       }
     </div>
   </div>

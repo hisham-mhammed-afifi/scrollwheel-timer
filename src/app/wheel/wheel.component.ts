@@ -28,51 +28,50 @@ export class WheelComponent {
     return this.options[adjustedIndex];
   }
 
-  onHoursScroll(event: WheelEvent | Event) {
+  lastScrollPosition = 0;
+  // onWheelScroll(event: WheelEvent | Event) {
+  //   if (!(event instanceof WheelEvent) || event.type !== 'wheel') return;
+  //   // this.audio = new Audio('assets/audios/scroll-audio.mp3');
+  //   // this.audio.playbackRate = 3.0;
+  //   // this.audio.play();
+  //   const deltaY = (event as WheelEvent).deltaY; // Get the scroll amount
+
+  //   this.selectedIndex = Math.round(
+  //     (this.selectedIndex - (deltaY > 0 ? -1 : 1)) % this.options.length
+  //   );
+
+  //   // Ensure selectedIndex stays within bounds
+  //   this.selectedIndex =
+  //     (this.selectedIndex + this.options.length) % this.options.length;
+  // }
+
+  onScroll(event: Event) {
     this.audio = new Audio('assets/audios/scroll-audio.mp3');
     this.audio.playbackRate = 3.0;
     this.audio.play();
-    const deltaY = (event as WheelEvent).deltaY; // Get the scroll amount
-    const scrollStep =
-      this.timeScrollElement.nativeElement.scrollHeight / this.options.length; // Calculate scroll step size
 
-    // Update selectedIndex based on scroll direction and step size
-    this.selectedIndex = Math.round(
-      (this.selectedIndex - (deltaY > 0 ? -1 : 1)) % this.options.length
-    );
+    const scrollH = this.timeScrollElement.nativeElement.scrollHeight;
+    const scrollStep = scrollH / this.options.length;
+    const scrollT = (event.target as HTMLElement).scrollTop;
 
-    // Ensure selectedIndex stays within bounds
-    this.selectedIndex =
-      (this.selectedIndex + this.options.length) % this.options.length;
+    if (Math.abs(scrollT - this.lastScrollPosition) >= scrollStep) {
+      this.selectedIndex = Math.round(
+        (this.selectedIndex - (scrollT > this.lastScrollPosition ? -1 : 1)) %
+          this.options.length
+      );
+      this.lastScrollPosition = scrollT;
+    }
   }
 
-  // updateDisplayedTime(index: number) {
-  //   const timeCategory = this.getSelectedTimeCategory();
-  //   switch (timeCategory) {
-  //     case 'hours':
-  //       this.hours = this.hourOptions[index];
-  //       break;
-  //     case 'minutes':
-  //       this.minutes = this.minuteOptions[index];
-  //       break;
-  //     case 'seconds':
-  //       this.seconds = this.secondOptions[index];
-  //       break;
-  //   }
-  // }
+  rotateArray(numbersArr: any[], currentNumber: number) {
+    if (currentNumber < 1 || currentNumber > numbersArr.length) {
+      return [];
+    }
 
-  // getSelectedTimeCategory(): string {
-  //   const scrollTop = this.timeScrollElement.nativeElement.scrollTop;
-  //   const threshold1 = (this.hourOptions.length * this.timeScrollElement.nativeElement.scrollHeight) / 3;
-  //   const threshold2 =
-  //     (this.hourOptions.length * 2 * this.timeScrollElement.nativeElement.scrollHeight) / 3;
-
-  //   if (scrollTop < threshold1) {
-  //     return 'hours';
-  //   } else if (scrollTop < threshold2) {
-  //     return 'minutes';
-  //   } else {
-  //     return 'seconds';
-  //   }
-  // }
+    const rotationAmount = (currentNumber - 1) % numbersArr.length;
+    const rotatedArray = numbersArr
+      .slice(rotationAmount)
+      .concat(numbersArr.slice(0, rotationAmount));
+    return rotatedArray;
+  }
 }
