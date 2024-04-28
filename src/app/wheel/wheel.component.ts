@@ -1,4 +1,11 @@
-import { Component, ElementRef, ViewChild, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  Input,
+  OnInit,
+  AfterViewInit,
+} from '@angular/core';
 
 @Component({
   selector: 'app-wheel',
@@ -7,16 +14,29 @@ import { Component, ElementRef, ViewChild, Input } from '@angular/core';
   templateUrl: './wheel.component.html',
   styleUrl: './wheel.component.scss',
 })
-export class WheelComponent {
-  @Input() options: any[] = [];
+export class WheelComponent implements OnInit, AfterViewInit {
+  @Input({
+    transform: (value: any[]) => {
+      return [...value, ...value, ...value];
+    },
+  })
+  options: any[] = [];
 
-  selectedIndex: number = 0; // Tracks the currently selected Index
+  @Input() selectedIndex: number = 0;
 
   audio!: HTMLAudioElement;
 
-  @ViewChild('timeScroll') timeScrollElement!: ElementRef;
+  @ViewChild('timeScroll') timeScrollElement!: ElementRef<HTMLElement>;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.selectedIndex = Math.ceil(this.options.length / 3) - 1;
+  }
+
+  ngAfterViewInit(): void {
+    this.timeScrollElement.nativeElement.scrollBy({
+      top: Math.ceil(this.timeScrollElement.nativeElement.scrollHeight / 2),
+    });
+  }
 
   getElementAtIndex(index: number): any | undefined {
     const arrayLength = this.options.length;
@@ -26,6 +46,15 @@ export class WheelComponent {
       return undefined; // Out-of-bounds index
     }
     return this.options[adjustedIndex];
+  }
+
+  addZero(index: number) {
+    const num = this.getElementAtIndex(index);
+    if (num < 10) {
+      return '0' + num;
+    }
+
+    return num;
   }
 
   lastScrollPosition = 0;

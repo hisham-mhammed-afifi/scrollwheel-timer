@@ -10,7 +10,22 @@ import { WheelComponent } from './wheel/wheel.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  hours = Array.from({ length: 12 }).map((n, i) => i + 1);
+  hours = Array.from({ length: 24 }).map((n, i) => i);
   minutes = Array.from({ length: 60 }).map((n, i) => i);
   seconds = Array.from({ length: 60 }).map((n, i) => i);
+
+  selectedHourIdx = 0;
+  selectedminuteIdx = 0;
+  selectedSecondIdx = 0;
+
+  timerStarted = false;
+
+  layoutTouched = false;
+
+  startTimer() {
+    this.timerStarted = true;
+  }
+  stopTimer() {
+    this.timerStarted = false;
+  }
 }
